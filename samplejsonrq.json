@@ -1,0 +1,140 @@
+{
+    "info": {
+      "name": "Recipe API",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+      "_postman_id": "12345678-aaaa-bbbb-cccc-1234567890ab"
+    },
+    "item": [
+      {
+        "name": "Register User",
+        "request": {
+          "method": "POST",
+          "header": [
+            { "key": "Content-Type", "value": "application/json" }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"username\": \"testuser\",\n  \"email\": \"test@example.com\",\n  \"password\": \"StrongPass123!\"\n}"
+          },
+          "url": {
+            "raw": "http://127.0.0.1:8000/api/auth/users/",
+            "protocol": "http",
+            "host": ["127.0.0.1"],
+            "port": "8000",
+            "path": ["api", "auth", "users", ""]
+          }
+        }
+      },
+      {
+        "name": "Login (JWT Token)",
+        "request": {
+          "method": "POST",
+          "header": [
+            { "key": "Content-Type", "value": "application/json" }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"username\": \"testuser\",\n  \"password\": \"StrongPass123!\"\n}"
+          },
+          "url": {
+            "raw": "http://127.0.0.1:8000/api/auth/jwt/create/",
+            "protocol": "http",
+            "host": ["127.0.0.1"],
+            "port": "8000",
+            "path": ["api", "auth", "jwt", "create", ""]
+          }
+        }
+      },
+      {
+        "name": "Create Recipe",
+        "request": {
+          "method": "POST",
+          "header": [
+            { "key": "Content-Type", "value": "application/json" },
+            { "key": "Authorization", "value": "Bearer {{access_token}}" }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"title\": \"Pancakes\",\n  \"description\": \"Fluffy pancakes\",\n  \"ingredients\": [\"Flour\", \"Milk\", \"Eggs\"],\n  \"instructions\": \"Mix all and fry\",\n  \"category\": \"Dessert\",\n  \"preparation_time\": 10,\n  \"cooking_time\": 15,\n  \"servings\": 2\n}"
+          },
+          "url": {
+            "raw": "http://127.0.0.1:8000/api/recipes/",
+            "protocol": "http",
+            "host": ["127.0.0.1"],
+            "port": "8000",
+            "path": ["api", "recipes", ""]
+          }
+        }
+      },
+      {
+        "name": "List Recipes",
+        "request": {
+          "method": "GET",
+          "url": {
+            "raw": "http://127.0.0.1:8000/api/recipes/",
+            "protocol": "http",
+            "host": ["127.0.0.1"],
+            "port": "8000",
+            "path": ["api", "recipes", ""]
+          }
+        }
+      },
+      {
+        "name": "Retrieve Recipe",
+        "request": {
+          "method": "GET",
+          "url": {
+            "raw": "http://127.0.0.1:8000/api/recipes/1/",
+            "protocol": "http",
+            "host": ["127.0.0.1"],
+            "port": "8000",
+            "path": ["api", "recipes", "1", ""]
+          }
+        }
+      },
+      {
+        "name": "Update Recipe",
+        "request": {
+          "method": "PUT",
+          "header": [
+            { "key": "Content-Type", "value": "application/json" },
+            { "key": "Authorization", "value": "Bearer {{access_token}}" }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"title\": \"Pancakes Deluxe\",\n  \"description\": \"Now with syrup\",\n  \"ingredients\": [\"Flour\", \"Milk\", \"Eggs\", \"Syrup\"],\n  \"instructions\": \"Mix, fry, top with syrup\",\n  \"category\": \"Dessert\",\n  \"preparation_time\": 12,\n  \"cooking_time\": 15,\n  \"servings\": 2\n}"
+          },
+          "url": {
+            "raw": "http://127.0.0.1:8000/api/recipes/1/",
+            "protocol": "http",
+            "host": ["127.0.0.1"],
+            "port": "8000",
+            "path": ["api", "recipes", "1", ""]
+          }
+        }
+      },
+      {
+        "name": "Delete Recipe",
+        "request": {
+          "method": "DELETE",
+          "header": [
+            { "key": "Authorization", "value": "Bearer {{access_token}}" }
+          ],
+          "url": {
+            "raw": "http://127.0.0.1:8000/api/recipes/1/",
+            "protocol": "http",
+            "host": ["127.0.0.1"],
+            "port": "8000",
+            "path": ["api", "recipes", "1", ""]
+          }
+        }
+      }
+    ],
+    "variable": [
+      {
+        "key": "access_token",
+        "value": ""
+      }
+    ]
+  }
+  
