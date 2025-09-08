@@ -4,15 +4,18 @@ from .models import Ingredient, Recipe, RecipeIngredient, SharedRecipe
 
 User = get_user_model()
 
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["id", "username", "email"]
 
+
 class IngredientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ingredient
         fields = ["id", "name"]
+
 
 class RecipeIngredientSerializer(serializers.ModelSerializer):
     ingredient = IngredientSerializer(read_only=True)
@@ -24,6 +27,7 @@ class RecipeIngredientSerializer(serializers.ModelSerializer):
         model = RecipeIngredient
         fields = ["id", "ingredient", "ingredient_id", "quantity"]
 
+
 class RecipeSerializer(serializers.ModelSerializer):
     owner = UserSerializer(read_only=True)
     ingredients = RecipeIngredientSerializer(
@@ -32,7 +36,19 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Recipe
-        fields = ["id", "title", "description", "instructions", "servings", "created_at", "owner", "ingredients"]
+        fields = [
+            "id",
+            "title",
+            "description",
+            "instructions",
+            "category",
+            "preparation_time",
+            "cooking_time",
+            "servings",
+            "created_at",
+            "owner",
+            "ingredients",
+        ]
 
     def create(self, validated_data):
         ingredients_data = validated_data.pop("recipeingredient_set", [])
@@ -51,6 +67,7 @@ class RecipeSerializer(serializers.ModelSerializer):
             for ing in ingredients_data:
                 RecipeIngredient.objects.create(recipe=instance, **ing)
         return instance
+
 
 class SharedRecipeSerializer(serializers.ModelSerializer):
     recipe = RecipeSerializer(read_only=True)

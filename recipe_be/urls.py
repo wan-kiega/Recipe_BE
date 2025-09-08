@@ -15,8 +15,20 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from core.views import UserViewSet, IngredientViewSet, RecipeViewSet, SharedRecipeViewSet
+
+# DRF Router for viewsets
+router = DefaultRouter()
+router.register(r"users", UserViewSet, basename="users")
+router.register(r"ingredients", IngredientViewSet)
+router.register(r"recipes", RecipeViewSet)
+router.register(r"shared", SharedRecipeViewSet)
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path("admin/", admin.site.urls),
+    path("api/", include(router.urls)),              # Core API routes
+    path("api/auth/", include("djoser.urls")),       # Djoser user management
+    path("api/auth/", include("djoser.urls.jwt")),   # JWT login/logout
 ]
