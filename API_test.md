@@ -3,7 +3,7 @@
 This guide provides a step-by-step walkthrough of the Recipe API using the command-line tool `curl`. You will perform all key actions, including user authentication and recipe management, directly from your terminal.
 
 **Base URL:**
-Before you begin, set the `BASE_URL` environment variable to the address of your deployed API.
+Before you begin, set the `BASE_URL` environment variable to the address of your deployed API or the localhost address.
 
 ```bash
 export BASE_URL="https://yourappname.up.railway.app/"
@@ -143,9 +143,87 @@ curl -X DELETE "$BASE_URL/api/recipes/1/" \
 
 -----
 
-### **Common Error Testing**
+Perfect — let’s document the **search and filter endpoints** in the same structured style as your delete example.
 
-Here are examples to demonstrate the API's validation and error handling.
+----
+
+#### **Search Recipes by Title or Ingredient**
+
+Search recipes using keywords in the title or ingredients.
+
+```bash
+curl -X GET "$BASE_URL/api/recipes/?search=chicken"
+```
+
+* **Expected Success:** `200 OK`.
+  Response is a JSON array of all recipes containing `"chicken"` in the title or ingredients.
+* **Failure (no matches):** `200 OK` with an empty array (`[]`).
+
+----
+
+#### **Filter Recipes by Category**
+
+Retrieve recipes belonging to a specific category.
+
+```bash
+curl -X GET "$BASE_URL/api/recipes/?category=Dessert"
+```
+
+* **Expected Success:** `200 OK`.
+  Response is a JSON array of recipes in the `Dessert` category.
+* **Failure (invalid category):** `200 OK` with an empty array (`[]`).
+  *(Optional improvement: return `400 Bad Request` with a message `"Category not found"` if you add custom error handling.)*
+
+----
+
+#### **Filter Recipes by Preparation Time**
+
+Get recipes that require a specific preparation time (in minutes).
+
+```bash
+curl -X GET "$BASE_URL/api/recipes/?preparation_time=30"
+```
+
+* **Expected Success:** `200 OK`.
+  Response includes all recipes where `preparation_time` equals `30`.
+* **Failure (no matches):** `200 OK` with an empty array (`[]`).
+
+----
+
+#### **Order Recipes by Cooking Time**
+
+Sort recipes by cooking time (ascending by default).
+
+```bash
+curl -X GET "$BASE_URL/api/recipes/?ordering=cooking_time"
+```
+
+* **Expected Success:** `200 OK`.
+  Response is an array of recipes sorted by `cooking_time` in ascending order.
+* **Descending Order:**
+
+```bash
+curl -X GET "$BASE_URL/api/recipes/?ordering=-cooking_time"
+```
+
+----
+
+#### **Combine Filters (Category + Search + Ordering)**
+
+You can chain parameters together.
+
+```bash
+curl -X GET "$BASE_URL/api/recipes/?category=Dessert&search=chocolate&ordering=-created_at"
+```
+
+* **Expected Success:** `200 OK`.
+  Response contains all recipes in `Dessert` with `"chocolate"` in their title/ingredients, ordered by most recently created.
+* **Failure (no matches):** `200 OK` with an empty array (`[]`).
+
+----
+
+
+### **Error Testing**
 
 #### **Invalid Email Registration**
 
