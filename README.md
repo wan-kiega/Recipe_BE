@@ -22,4 +22,9 @@ Files for the ALX backend capstone project.
 > ```python manage.py runserver``` 
 then open the localhost address provided
 
+## Deplyoment (to render)
+
+1. pip install psycopg2-binary
+2. pip install dj-database-url
+
 
