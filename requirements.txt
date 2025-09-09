@@ -1,5 +1,5 @@
 # Core Django
-Django==4.2.16   # LTS, last version with Python 3.9 support
+Django==4.2.16 
 asgiref==3.7.2
 sqlparse==0.5.1
 tzdata==2024.1
@@ -35,3 +35,4 @@ yarl==1.9.4
 # Other
 beautifulsoup4==4.12.3
 anyio==4.3.0
+gunicorn==21.2.0
