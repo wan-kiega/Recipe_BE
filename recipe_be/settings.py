@@ -19,8 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "unsafe-secret-key")  # fallback for local dev
 DEBUG = os.environ.get("DJANGO_DEBUG", "False").lower() == "true"
-ALLOWED_HOSTS = ["ALLOWED_HOSTS"]
-
+ALLOWED_HOSTS = [*]
 
 # Applications
 INSTALLED_APPS = [
